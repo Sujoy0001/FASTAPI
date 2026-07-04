@@ -49,3 +49,27 @@ uv sync
   - `schemas.py` - Pydantic schemas
   - `routes/` - API route handlers
 - `nginx/` - Nginx configuration for reverse proxy
+
+## Celery (Background Tasks)
+
+This project uses Celery for background processing with Redis as the broker/back-end.
+
+Run Redis (example using Docker):
+
+```bash
+docker run -p 6379:6379 redis:7
+```
+
+Start the Celery worker:
+
+```bash
+celery -A app.celery_app.celery_app worker --loglevel=info
+```
+
+Start the FastAPI app as usual (e.g. uvicorn):
+
+```bash
+uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+When a new task is created via the API, a background job `notify_task_created` is enqueued.

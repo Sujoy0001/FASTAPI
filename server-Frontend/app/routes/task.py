@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from app.database import SessionLocal
 from app.models import Task
 from app.schemas import TaskCreate
+from app.tasks import notify_task_created
 
 router = APIRouter(prefix="/tasks", tags=["Tasks"])
 
@@ -19,6 +20,13 @@ def create_task(task: TaskCreate):
     db.commit()
     db.refresh(new_task)
     db.close()
+
+    # Enqueue a background notification job
+    try:
+        notify_task_created.delay(new_task.id)
+    except Exception:
+        # If Celery is not running or broker unavailable, proceed without failing the request
+        pass
 
     return {"message": "Task created", "task": new_task}
 
