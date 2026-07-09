@@ -11,6 +11,7 @@ async function fetchTasks() {
             <div class="task ${task.completed ? "completed" : ""}">
                 <h3>${task.title}</h3>
                 <p>${task.description}</p>
+                <p><strong>Importance:</strong> ${task.importance}</p>
 
                 ${
                     !task.completed
@@ -27,6 +28,7 @@ async function fetchTasks() {
 async function createTask() {
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
+    const importance = document.getElementById("importance").value;
 
     await fetch("/tasks/", {
         method: "POST",
@@ -35,12 +37,14 @@ async function createTask() {
         },
         body: JSON.stringify({
             title,
-            description
+            description,
+            importance
         })
     });
 
     document.getElementById("title").value = "";
     document.getElementById("description").value = "";
+    document.getElementById("importance").value = "normal";
 
     fetchTasks();
 }

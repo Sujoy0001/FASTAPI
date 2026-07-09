@@ -5,11 +5,13 @@ from typing import Optional
 class TaskCreate(BaseModel):
     title: str
     description: str
+    importance: str = "normal"
 
 class TaskResponse(BaseModel):
     id: int
     title: str
     description: str
+    importance: str
     completed: bool
     status: str
     celery_task_id: Optional[str]

@@ -1,25 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task Manager</title>
-    <link rel="stylesheet" href="assets/style.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
     <div class="container">
-        <h1>Task Manager</h1>
+      <h1>Task Manager</h1>
 
-        <div class="form">
-            <input type="text" id="title" placeholder="Task title">
-            <input type="text" id="description" placeholder="Task description">
-            <button onclick="createTask()">Add Task</button>
-        </div>
+      <div class="form">
+        <input type="text" id="title" placeholder="Task title" />
+        <input type="text" id="description" placeholder="Task description" />
+        <select id="importance">
+          <option value="high">High</option>
+          <option value="normal" selected>Normal</option>
+          <option value="low">Low</option>
+        </select>
+        <button onclick="createTask()">Add Task</button>
+      </div>
 
-        <div id="tasks"></div>
+      <div id="tasks"></div>
     </div>
 
     <script src="assets/app.js"></script>
-</body>
+  </body>
 </html>

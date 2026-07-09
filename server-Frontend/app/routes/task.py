@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.database import SessionLocal
 from app.models import Task
-from app.schemas import TaskCreate, TaskStatusResponse
+from app.schemas import TaskCreate, TaskResponse, TaskStatusResponse
 from app.tasks import notify_task_created
 from app.celery_app import celery_app
 
@@ -15,6 +15,7 @@ def create_task(task: TaskCreate):
     new_task = Task(
         title=task.title,
         description=task.description,
+        importance=task.importance,
         status="pending"
     )
 
@@ -126,6 +127,7 @@ def get_task_status(task_id: int):
     return TaskStatusResponse(
         task_id=task.id,
         status=celery_status,
+        importance=task.importance,
         celery_task_id=task.celery_task_id,
         celery_result=celery_result,
         completed=task.completed,
