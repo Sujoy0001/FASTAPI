@@ -6,6 +6,11 @@ async function fetchTasks() {
 
     taskContainer.innerHTML = "";
 
+    if (!tasks || tasks.length === 0) {
+        taskContainer.innerHTML = '<p class="no-tasks">No tasks yet. Add one above to see it here.</p>';
+        return;
+    }
+
     tasks.forEach(task => {
         taskContainer.innerHTML += `
             <div class="task ${task.completed ? "completed" : ""}">
